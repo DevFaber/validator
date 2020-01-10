@@ -9,6 +9,9 @@ Route.put('passwords', 'ForgotPasswordController.update')
 
 Route.post('sessions', 'SessionController.store')
 
+Route.post('users', 'UserController.store')
+Route.post('companies', 'CompanyController.store')
+
 Route.group(() => {
   Route.get('home', 'HomeController.index')
 
@@ -25,8 +28,6 @@ Route.group(() => {
   Route.get('validations/users/:id', 'ValidationController.index')
   Route.get('validations/companies/:id', 'ValidationController.index')
 
-  Route.post('companies', 'CompanyController.store')
-  Route.post('users', 'UserController.store')
   Route.post('files', 'FileController.store')
   Route.delete('companies/:id', 'CompanyController.destroy')
 
