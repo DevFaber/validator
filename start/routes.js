@@ -3,15 +3,11 @@
 const Route = use('Route')
 
 Route.post('validations', 'ValidationController.store')
-Route.post('passwords', 'ForgotPasswordController.store').validator(
-  'ForgotPassword'
-)
+Route.post('passwords', 'ForgotPasswordController.store')
 
-Route.put('passwords', 'ForgotPasswordController.update').validator(
-  'ResetPassword'
-)
+Route.put('passwords', 'ForgotPasswordController.update')
 
-Route.post('sessions', 'SessionController.store').validator('Session')
+Route.post('sessions', 'SessionController.store')
 
 Route.group(() => {
   Route.get('home', 'HomeController.index')
@@ -29,8 +25,8 @@ Route.group(() => {
   Route.get('validations/users/:id', 'ValidationController.index')
   Route.get('validations/companies/:id', 'ValidationController.index')
 
-  Route.post('companies', 'CompanyController.store').validator('Company')
-  Route.post('users', 'UserController.store').validator('User')
+  Route.post('companies', 'CompanyController.store')
+  Route.post('users', 'UserController.store')
   Route.post('files', 'FileController.store')
   Route.delete('companies/:id', 'CompanyController.destroy')
 
