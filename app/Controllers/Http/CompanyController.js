@@ -10,7 +10,13 @@ class CompanyController {
   }
 
   async store({ request }) {
-    const data = request.only(['razao', 'bairro', 'cidade'])
+    const data = request.only([
+      'razao',
+      'bairro',
+      'cidade',
+      'CNPJ',
+      'is_active',
+    ])
 
     const company = Company.create(data)
 
@@ -18,13 +24,36 @@ class CompanyController {
     return company
   }
 
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {
+    const company = Company.findOrFail(params.id)
+
+    return company
+  }
 
   async edit({ params, request, response, view }) {}
 
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const company = await Company.findOrFail(params.id)
+    const data = request.only([
+      'razao',
+      'bairro',
+      'cidade',
+      'CNPJ',
+      'is_active',
+    ])
 
-  async destroy({ params, request, response }) {}
+    company.merge(data)
+
+    await company.save()
+
+    return company
+  }
+
+  async destroy({ params }) {
+    const company = await Company.findOrFail(params.id)
+
+    await company.delete()
+  }
 }
 
 module.exports = CompanyController

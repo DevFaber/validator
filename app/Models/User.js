@@ -25,6 +25,10 @@ class User extends Model {
   validatinos() {
     return this.hasMany('App/Models/Validation')
   }
+
+  files() {
+    return this.hasMany('App/Models/File')
+  }
 }
 
 module.exports = User

@@ -6,14 +6,14 @@ const Schema = use('Schema')
 class UserSchema extends Schema {
   up() {
     this.create('users', table => {
-      table.increments(),
-        table
-          .integer('company_id')
-          .unsigned()
-          .references('id')
-          .inTable('companies')
-          .onUpdate('CASCADE')
-          .onDelete('SET NULL')
+      table.increments()
+      table
+        .integer('company_id')
+        .unsigned()
+        .references('id')
+        .inTable('companies')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
       table.string('name', 80).notNullable()
       table
         .string('cpf', 11)

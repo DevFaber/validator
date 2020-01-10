@@ -11,9 +11,7 @@ class ValidationController {
     const user = await User.findByOrFail(data)
 
     if (!user) {
-      return response
-        .status(err.status)
-        .send({ error: { message: 'Usuario não cadastrado' } })
+      return response.status(404).json({ message: 'Usuario não cadastrado' })
     }
 
     const { id, company_id } = user
@@ -26,26 +24,42 @@ class ValidationController {
     return validation
   }
 
-  async index({ request }) {
-    const { company_id } = request.all()
+  async index({ request, response }) {
+    const { company_id, user_id, data1, data2 } = request.all()
+    const { page } = request.get()
 
-    const list = await Validation.query()
-      .where('company_id', company_id)
-      .with('users')
-      .with('companies')
-      //.orderBy()
-      .fetch()
+    let validations = []
 
-    return list
-  }
+    if (!company_id && !user_id) {
+      validations = await Validation.query()
+        .setVisible(['id', 'user_id', 'created_at'])
+        .whereBetween('created_at', [data1, data2])
+        .with('companies')
+        .with('users')
+        .paginate(page)
+    }
 
-  async index() {
-    const validations = Validation.query()
-      .with('users')
-      .with('companies')
-      .fetch()
+    if (company_id && !user_id) {
+      validations = await Validation.query()
+        .where('company_id', company_id)
+        .whereBetween('created_at', [data1, data2])
+        .with('users')
+        .with('companies')
+        .setVisible(['id', 'user_id', 'created_at'])
+        .paginate(page, 7)
+    }
 
-    return validations
+    if (company_id && user_id) {
+      validations = await Validation.query()
+        .whereBetween('created_at', [data1, data2])
+        .where('company_id', company_id)
+        .where('user_id', user_id)
+        .with('users')
+        .with('companies')
+        .paginate(page, 10)
+    }
+
+    return validations.toJSON().data
   }
 }
 
