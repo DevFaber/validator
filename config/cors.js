@@ -20,7 +20,7 @@ module.exports = {
     'validaonline.net',
     'www.validaoniline.net',
     '104.198.14.52',
-    'https://serene-neumann-2ebed2.netlify.com',
+    'serene-neumann-2ebed2.netlify.com',
   ],
 
   /*
