@@ -16,12 +16,7 @@ module.exports = {
   | Function - Receives the current origin and should return one of the above values.
   |
   */
-  origin: [
-    'validaonline.net',
-    'www.validaoniline.net',
-    '104.198.14.52',
-    'serene-neumann-2ebed2.netlify.com',
-  ],
+  origin: ['https://api.validaonline.net'],
 
   /*
   |--------------------------------------------------------------------------
