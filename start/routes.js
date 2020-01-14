@@ -12,6 +12,8 @@ Route.post('sessions', 'SessionController.store')
 Route.post('users', 'UserController.store')
 Route.post('companies', 'CompanyController.store')
 
+Route.get('users', 'UserController.index')
+
 Route.group(() => {
   Route.get('home', 'HomeController.index')
 
@@ -19,7 +21,6 @@ Route.group(() => {
   Route.get('companies/:id', 'CompanyController.show')
   Route.put('companies/:id', 'CompanyController.update')
 
-  Route.get('users', 'UserController.index')
   Route.put('users/:id', 'UserController.update')
   Route.delete('users/:id', 'UserController.destroy')
 
