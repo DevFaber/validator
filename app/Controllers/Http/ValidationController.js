@@ -6,22 +6,26 @@ const Validation = use('App/Models/Validation')
 
 class ValidationController {
   async store({ request, response }) {
-    const data = request.only(['cpf'])
+    try {
+      const data = request.only(['cpf'])
 
-    const user = await User.findByOrFail(data)
+      const user = await User.findByOrFail(data)
 
-    if (!user) {
-      return response.status(404).json({ message: 'Usuario não cadastrado' })
+      if (!user) {
+        return response.status(404).json({ message: 'Usuario não cadastrado' })
+      }
+
+      const { id, company_id } = user
+
+      const validation = await Validation.create({
+        user_id: id,
+        company_id: company_id,
+      })
+
+      return validation
+    } catch (error) {
+      return response.status(404).json({ message: 'Falha no registro' })
     }
-
-    const { id, company_id } = user
-
-    const validation = await Validation.create({
-      user_id: id,
-      company_id: company_id,
-    })
-
-    return validation
   }
 
   async index({ request, response }) {
