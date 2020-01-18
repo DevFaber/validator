@@ -40,7 +40,7 @@ class ValidationController {
         .whereBetween('created_at', [data1, data2])
         .with('companies')
         .with('users')
-        .paginate(page)
+        .paginate(page, 100000)
     }
 
     if (company_id && !user_id) {
@@ -50,7 +50,7 @@ class ValidationController {
         .with('users')
         .with('companies')
         .setVisible(['id', 'user_id', 'created_at'])
-        .paginate(page, 7)
+        .paginate(page, 100000)
     }
 
     if (company_id && user_id) {
@@ -60,7 +60,7 @@ class ValidationController {
         .where('user_id', user_id)
         .with('users')
         .with('companies')
-        .paginate(page, 10)
+        .paginate(page, 100000)
     }
 
     return validations.toJSON().data
