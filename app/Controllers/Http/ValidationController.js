@@ -15,14 +15,14 @@ class ValidationController {
         return response.status(404).json({ message: 'Usuario não cadastrado' })
       }
 
-      const { id, company_id } = user
+      const { id, company_id, name } = user
 
       const validation = await Validation.create({
         user_id: id,
         company_id: company_id,
       })
 
-      return validation
+      return { validation, name }
     } catch (error) {
       return response.status(404).json({ message: 'Falha no registro' })
     }
