@@ -60,7 +60,12 @@ class UserController {
 
     await user.save()
 
-    return data
+    return user
+  }
+  async show({ params }) {
+    const user = await User.findOrFail(params.id)
+
+    return user
   }
 
   async destroy({ params }) {

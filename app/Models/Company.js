@@ -6,6 +6,11 @@ class Company extends Model {
   users() {
     return this.hasMany('App/Models/User')
   }
+
+  departments() {
+    return this.hasMany('App/Models/Department')
+  }
+
   validations() {
     return this.hasMany('App/Models/Validation')
   }
