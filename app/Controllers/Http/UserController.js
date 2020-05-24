@@ -13,6 +13,7 @@ class UserController {
       'password',
       'is_admin',
       'is_active',
+      'department_id',
     ])
 
     const user = User.create(data)
@@ -28,11 +29,17 @@ class UserController {
     if (company_id) {
       users = await User.query()
         .where('company_id', company_id)
+        .with('departments', department => {
+          department.setVisible(['name'])
+        })
         .setVisible(['id', 'name', 'cpf', 'email', 'office'])
         .orderBy('id', 'asc')
         .fetch()
     } else {
       users = await User.query()
+        .with('departments', department => {
+          department.setVisible(['name'])
+        })
         .setVisible(['id', 'name', 'cpf', 'email', 'office'])
         .orderBy('id', 'asc')
         .fetch()
@@ -54,6 +61,7 @@ class UserController {
       'is_admin',
       'is_active',
       'file_id',
+      'department_id',
     ])
 
     user.merge(data)

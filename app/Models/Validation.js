@@ -9,6 +9,9 @@ class Validation extends Model {
   companies() {
     return this.belongsTo('App/Models/Company')
   }
+  departments() {
+    return this.belongsTo('App/Models/Department')
+  }
 }
 
 module.exports = Validation

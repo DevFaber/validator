@@ -29,6 +29,9 @@ class User extends Model {
   files() {
     return this.hasMany('App/Models/File')
   }
+  departments() {
+    return this.belongsTo('App/Models/Department')
+  }
 }
 
 module.exports = User
