@@ -40,10 +40,10 @@ class ValidationController {
         .setVisible(['id', 'user_id', 'created_at'])
         .whereBetween('created_at', [data1, data2])
         .with('companies')
-        .with('users', builder => {
-          builder.setVisible(['id', 'name', 'is_active', 'cpf'])
+        .with('users', (builder) => {
+          builder.setVisible(['id', 'name', 'is_active', 'cpf', 'office'])
         })
-        .with('departments', department => {
+        .with('departments', (department) => {
           department.setVisible(['id', 'name', 'company_id'])
         })
         .paginate(page, 10000)
@@ -53,19 +53,20 @@ class ValidationController {
       validations = await Validation.query()
         .where('company_id', company_id)
         .whereBetween('created_at', [data1, data2])
-        .with('users', user => {
+        .with('users', (user) => {
           user.setVisible([
             'id',
             'name',
             'is_active',
             'cpf',
+            'office',
             'departments.name',
           ])
         })
-        .with('companies', company => {
+        .with('companies', (company) => {
           company.setVisible(['id', 'razao', 'cidade', 'CNPJ'])
         })
-        .with('departments', department => {
+        .with('departments', (department) => {
           department.setVisible(['id', 'name', 'company_id'])
         })
         .setVisible(['id', 'user_id', 'created_at'])
@@ -77,19 +78,20 @@ class ValidationController {
         .whereBetween('created_at', [data1, data2])
         .where('company_id', company_id)
         .where('user_id', user_id)
-        .with('users', user => {
+        .with('users', (user) => {
           user.setVisible([
             'id',
             'name',
             'is_active',
             'cpf',
+            'office',
             'departments.name',
           ])
         })
-        .with('companies', company => {
+        .with('companies', (company) => {
           company.setVisible(['id', 'razao', 'cidade', 'CNPJ'])
         })
-        .with('departments', department => {
+        .with('departments', (department) => {
           department.setVisible(['id', 'name', 'company_id'])
         })
         .paginate(page, 10000)
