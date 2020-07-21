@@ -3,7 +3,7 @@
 const User = use('App/Models/User')
 
 class UserController {
-  async store({ request }) {
+  async store ({ request }) {
     const data = request.only([
       'company_id',
       'name',
@@ -13,7 +13,7 @@ class UserController {
       'password',
       'is_admin',
       'is_active',
-      'department_id',
+      'department_id'
     ])
 
     const user = User.create(data)
@@ -21,24 +21,41 @@ class UserController {
     return user
   }
 
-  async index({ request, response, view }) {
-    const { company_id } = request.all()
+  async index ({ request, response, view }) {
+    const { company_id, cpf } = request.all()
 
     let users = []
 
-    if (company_id) {
+    if (company_id && !cpf) {
       users = await User.query()
         .where('company_id', company_id)
-        .with('departments', department => {
+        .with('departments', (department) => {
           department.setVisible(['name'])
         })
         .setVisible(['id', 'name', 'cpf', 'email', 'office'])
         .orderBy('id', 'asc')
         .fetch()
+    }
+
+    if (cpf) {
+      users = await User.query()
+        .where('cpf', cpf)
+        .with('departments', (department) => {
+          department.setVisible(['name'])
+        })
+        .with('companies', (company) => {
+          company.setVisible(['razao'])
+        })
+        .setVisible(['id', 'name', 'cpf', 'email', 'office'])
+        // .orderBy('id', 'asc')
+        .fetch()
     } else {
       users = await User.query()
-        .with('departments', department => {
+        .with('departments', (department) => {
           department.setVisible(['name'])
+        })
+        .with('companies', (company) => {
+          company.setVisible(['razao'])
         })
         .setVisible(['id', 'name', 'cpf', 'email', 'office'])
         .orderBy('id', 'asc')
@@ -48,7 +65,7 @@ class UserController {
     return users
   }
 
-  async update({ params, request }) {
+  async update ({ params, request }) {
     const user = await User.findOrFail(params.id)
 
     const data = request.only([
@@ -61,7 +78,7 @@ class UserController {
       'is_admin',
       'is_active',
       'file_id',
-      'department_id',
+      'department_id'
     ])
 
     user.merge(data)
@@ -70,13 +87,8 @@ class UserController {
 
     return user
   }
-  async show({ params }) {
-    const user = await User.findOrFail(params.id)
 
-    return user
-  }
-
-  async destroy({ params }) {
+  async destroy ({ params }) {
     const user = User.findOrFail(params.id)
 
     await user.delete()

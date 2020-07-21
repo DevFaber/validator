@@ -5,31 +5,47 @@ const User = use('App/Models/User')
 const Validation = use('App/Models/Validation')
 
 class ValidationController {
-  async store({ request, response }) {
+  async store ({ request, response }) {
     try {
       const data = request.only(['cpf'])
 
       const user = await User.findByOrFail(data)
+      await user.load('departments', departments => {
+        departments.setVisible(['id', 'name'])
+      })
+
+      await user.load('companies', company => {
+        company.setVisible(['razao'])
+      })
 
       if (!user) {
         return response.status(404).json({ message: 'Usuario não cadastrado' })
       }
 
-      const { id, company_id, name, department_id } = user
-
       const validation = await Validation.create({
-        user_id: id,
-        company_id: company_id,
-        department_id: department_id,
+        user_id: user.id,
+        department_id: user.department_id
       })
 
-      return { validation, name }
+      const userData = await user.toJSON()
+
+      const valor = {
+        id: userData.id,
+        name: userData.name,
+        office: userData.office,
+        departments: userData.departments.name,
+        companies: userData.companies.razao,
+        created: validation.created_at,
+        validation_id: validation.id
+      }
+
+      return valor
     } catch (error) {
-      return response.status(404).json({ message: 'Falha no registro' })
+      return response.status(404).json({ message: error })
     }
   }
 
-  async index({ request, response }) {
+  async index ({ request, response }) {
     const { company_id, user_id, data1, data2 } = request.all()
     const { page } = request.get()
 
@@ -41,7 +57,7 @@ class ValidationController {
         .whereBetween('created_at', [data1, data2])
         .with('companies')
         .with('users', (builder) => {
-          builder.setVisible(['id', 'name', 'is_active', 'cpf', 'office'])
+          builder.setVisible(['id', 'name', 'is_active', 'cpf'])
         })
         .with('departments', (department) => {
           department.setVisible(['id', 'name', 'company_id'])
@@ -59,8 +75,7 @@ class ValidationController {
             'name',
             'is_active',
             'cpf',
-            'office',
-            'departments.name',
+            'departments.name'
           ])
         })
         .with('companies', (company) => {
@@ -84,8 +99,7 @@ class ValidationController {
             'name',
             'is_active',
             'cpf',
-            'office',
-            'departments.name',
+            'departments.name'
           ])
         })
         .with('companies', (company) => {
