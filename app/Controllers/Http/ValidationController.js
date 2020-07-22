@@ -57,7 +57,7 @@ class ValidationController {
         .whereBetween('created_at', [data1, data2])
         .with('companies')
         .with('users', (builder) => {
-          builder.setVisible(['id', 'name', 'is_active', 'cpf'])
+          builder.setVisible(['id', 'name', 'is_active', 'cpf', 'office'])
         })
         .with('departments', (department) => {
           department.setVisible(['id', 'name', 'company_id'])
@@ -75,6 +75,7 @@ class ValidationController {
             'name',
             'is_active',
             'cpf',
+            'office',
             'departments.name'
           ])
         })
@@ -99,6 +100,7 @@ class ValidationController {
             'name',
             'is_active',
             'cpf',
+            'office',
             'departments.name'
           ])
         })
