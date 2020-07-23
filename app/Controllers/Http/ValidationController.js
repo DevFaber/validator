@@ -24,12 +24,13 @@ class ValidationController {
 
       const validation = await Validation.create({
         user_id: user.id,
-        department_id: user.department_id
+        department_id: user.department_id,
+        company_id: user.company_id
       })
 
       const userData = await user.toJSON()
 
-      const valor = {
+      const details = {
         id: userData.id,
         name: userData.name,
         office: userData.office,
@@ -39,7 +40,7 @@ class ValidationController {
         validation_id: validation.id
       }
 
-      return valor
+      return details
     } catch (error) {
       return response.status(404).json({ message: error })
     }
