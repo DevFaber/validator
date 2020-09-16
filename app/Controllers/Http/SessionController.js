@@ -3,10 +3,18 @@
 const User = use('App/Models/User')
 
 class SessionController {
-  async store({ request, response, auth }) {
+  async store ({ request, response, auth }) {
     const { email, password } = request.all()
 
     const session = await User.findByOrFail('email', email)
+
+    await session.load('departments', departments => {
+      departments.setVisible(['id', 'name'])
+    })
+
+    await session.load('companies', company => {
+      company.setVisible(['razao'])
+    })
 
     const data = await session.toJSON()
 
@@ -17,6 +25,8 @@ class SessionController {
       is_admin: data.is_admin,
       password: data.password,
       file_id: data.file_id,
+      company: data && data.companies && data.companies.razao,
+      department: data && data.departments && data.departments.name
     }
 
     if (!user.email) {
