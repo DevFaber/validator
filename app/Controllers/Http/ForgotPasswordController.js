@@ -5,7 +5,7 @@ const User = use('App/Models/User')
 const Mail = use('Mail')
 
 class ForgotPasswordController {
-  async store({ request, response }) {
+  async store ({ request, response }) {
     try {
       const email = request.input('email')
 
@@ -21,7 +21,7 @@ class ForgotPasswordController {
         {
           email,
           token: user.token,
-          link: `${request.input('redirect_url')}?token=${user.token}`,
+          link: `${request.input('redirect_url')}?token=${user.token}`
         },
         message => {
           message
@@ -37,7 +37,7 @@ class ForgotPasswordController {
     }
   }
 
-  async update({ request, response }) {
+  async update ({ request, response }) {
     try {
       const { token, password } = request.all()
 

@@ -11,7 +11,7 @@ const Helpers = use('Helpers')
  * Resourceful controller for interacting with files
  */
 class FileController {
-  async store({ request, response }) {
+  async store ({ request, response }) {
     try {
       if (!request.file('file')) return
 
@@ -20,7 +20,7 @@ class FileController {
       const fileName = `${Date.now()}.${upload.subtype}`
 
       await upload.move(Helpers.tmpPath('uploads'), {
-        name: fileName,
+        name: fileName
       })
 
       if (!upload.moved()) {
@@ -31,7 +31,7 @@ class FileController {
         file: fileName,
         name: upload.clientName,
         type: upload.type,
-        subtype: upload.subtype,
+        subtype: upload.subtype
       })
 
       return file
@@ -42,7 +42,7 @@ class FileController {
     }
   }
 
-  async show({ params, response }) {
+  async show ({ params, response }) {
     const file = await File.findOrFail(params.id)
 
     return response.download(Helpers.tmpPath(`uploads/${file.file}`))
