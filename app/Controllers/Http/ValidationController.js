@@ -49,8 +49,6 @@ class ValidationController {
 
       const userData = await user.toJSON()
 
-      console.log(userData)
-
       const details = {
         validation_id: validation.id,
         id: userData.id,
