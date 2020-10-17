@@ -16,7 +16,18 @@ class DepartmentController {
    * @param {View} ctx.view
    */
   async index({ request, response, view }) {
-    const departments = await Department.all()
+    const { company_id } = request.all()
+
+    let departments = []
+
+    if (company_id) {
+      departments = await Department.query()
+        .where('company_id', company_id)
+        .orderBy('id', 'asc')
+        .fetch()
+    } else {
+      departments = await Department.all()
+    }
 
     return departments
   }
