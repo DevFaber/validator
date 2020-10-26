@@ -13,7 +13,7 @@ class SessionController {
     })
 
     await session.load('companies', company => {
-      company.setVisible(['razao'])
+      company.setVisible(['id', 'razao'])
     })
 
     const data = await session.toJSON()
@@ -26,6 +26,7 @@ class SessionController {
       password: data.password,
       file_id: data.file_id,
       company: data && data.companies && data.companies.razao,
+      company_id: data && data.companies && data.companies.id,
       department: data && data.departments && data.departments.name
     }
 
