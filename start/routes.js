@@ -17,6 +17,7 @@ Route.get('users/:id', 'UserController.show')
 
 Route.group(() => {
   Route.resource('departments', 'DepartmentController').apiOnly()
+  Route.get('departments/:id', 'DepartmentController.show')
   Route.get('home', 'HomeController.index')
 
   Route.get('companies', 'CompanyController.index')

@@ -15,7 +15,7 @@ class DepartmentController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {
+  async index ({ request, response, view }) {
     const { company_id } = request.all()
 
     let departments = []
@@ -32,7 +32,7 @@ class DepartmentController {
     return departments
   }
 
-  async store({ request }) {
+  async store ({ request }) {
     const data = request.only(['name', 'company_id'])
 
     const department = await Department.create(data)
@@ -40,13 +40,13 @@ class DepartmentController {
     return department
   }
 
-  async show({ params }) {
+  async show ({ params }) {
     const department = await Department.findOrFail(params.id)
 
     return department
   }
 
-  async update({ params, request, response }) {
+  async update ({ params, request, response }) {
     const department = await Department.findOrFail(params.id)
     const data = request.only(['name'])
 
@@ -57,7 +57,7 @@ class DepartmentController {
     return department
   }
 
-  async destroy({ params }) {
+  async destroy ({ params }) {
     const department = await Department.findOrFail(params.id)
 
     await department.delete()
