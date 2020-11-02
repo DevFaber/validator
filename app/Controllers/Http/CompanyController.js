@@ -4,9 +4,22 @@ const Company = use('App/Models/Company')
 
 class CompanyController {
   async index ({ request, response, view }) {
-    const companies = await Company.all()
+    const { id } = request.all()
 
-    return companies
+    let company = []
+
+    if (id) {
+      company = await Company.query()
+        .where('id', id)
+        .setVisible(['id', 'razao', 'CNPJ', 'bairro'])
+        .fetch()
+    } else if (!id) {
+      company = await Company.query()
+        .setVisible(['id', 'razao', 'CNPJ', 'bairro'])
+        .orderBy('id', 'asc')
+        .fetch()
+    }
+    return company
   }
 
   async store ({ request }) {
@@ -23,11 +36,15 @@ class CompanyController {
     return company
   }
 
-  async show ({ params, request, response, view }) {
-    const company = Company.findOrFail(params.id)
+  async show ({ params, request }) {}
+  //   const { id } = request.all()
+  //   const company = await Company.query()
+  //     .where('id', id)
+  //     .setVisible(['id', 'razao', 'CNPJ', 'bairro'])
+  //     .fetch()
 
-    return company
-  }
+  //   return company
+  // }
 
   async edit ({ params, request, response, view }) {}
 
