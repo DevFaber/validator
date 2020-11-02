@@ -11,11 +11,11 @@ class CompanyController {
     if (id) {
       company = await Company.query()
         .where('id', id)
-        .setVisible(['id', 'razao', 'CNPJ', 'bairro'])
+        .setVisible(['id', 'razao', 'CNPJ', 'bairro', 'cidade'])
         .fetch()
     } else if (!id) {
       company = await Company.query()
-        .setVisible(['id', 'razao', 'CNPJ', 'bairro'])
+        .setVisible(['id', 'razao', 'CNPJ', 'bairro', 'cidade'])
         .orderBy('id', 'asc')
         .fetch()
     }
