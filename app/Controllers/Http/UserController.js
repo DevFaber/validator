@@ -32,12 +32,15 @@ class UserController {
         .with('departments', (department) => {
           department.setVisible(['name'])
         })
+        .with('companies', (company) => {
+          company.setVisible(['razao'])
+        })
         .setVisible(['id', 'name', 'cpf', 'email', 'office'])
         .orderBy('id', 'asc')
         .fetch()
-    }
+    } else if
 
-    if (cpf) {
+    (!company_id && cpf) {
       users = await User.query()
         .where('cpf', cpf)
         .with('departments', (department) => {
@@ -47,9 +50,10 @@ class UserController {
           company.setVisible(['razao'])
         })
         .setVisible(['id', 'name', 'cpf', 'email', 'office'])
-        // .orderBy('id', 'asc')
+        .orderBy('id', 'asc')
         .fetch()
-    } else {
+    } else if
+    (!company_id && !cpf) {
       users = await User.query()
         .with('departments', (department) => {
           department.setVisible(['name'])
