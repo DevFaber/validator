@@ -57,10 +57,14 @@ class DepartmentController {
     return department
   }
 
-  async destroy ({ params }) {
-    const department = await Department.findOrFail(params.id)
+  async destroy ({ params, response }) {
+    try {
+      const department = await Department.findOrFail(params.id)
 
-    await department.delete()
+      await department.delete()
+    } catch (error) {
+      return response.status(404).json({ message: 'Departamento não existe!' })
+    }
   }
 }
 

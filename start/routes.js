@@ -16,8 +16,12 @@ Route.get('users', 'UserController.index')
 Route.get('users/:id', 'UserController.show')
 
 Route.group(() => {
-  Route.resource('departments', 'DepartmentController').apiOnly()
+  Route.post('departments', 'DepartmentController.store')
   Route.get('departments/:id', 'DepartmentController.show')
+  Route.put('departments/:id', 'DepartmentController.update')
+  Route.delete('departments/:id', 'DepartmentController.destroy')
+  Route.get('departments', 'DepartmentController.index')
+
   Route.get('home', 'HomeController.index')
 
   Route.get('companies', 'CompanyController.index')
