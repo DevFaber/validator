@@ -16,9 +16,11 @@ Route.get('users', 'UserController.index')
 Route.get('users/:id', 'UserController.show')
 
 Route.group(() => {
+  Route.get('card_validations', 'CardCompController.index')
   Route.post('departments', 'DepartmentController.store')
   Route.get('departments/:id', 'DepartmentController.show')
   Route.put('departments/:id', 'DepartmentController.update')
+  Route.put('profile/:id', 'UpdateProfileController.update')
   Route.delete('departments/:id', 'DepartmentController.destroy')
   Route.get('departments', 'DepartmentController.index')
 
