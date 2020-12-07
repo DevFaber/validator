@@ -3,12 +3,12 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const User = use('App/Models/User')
 const Validation = use('App/Models/Validation')
-const subHours = require('date-fns/subHours')
+// const subHours = require('date-fns/subHours')
 
 class ValidationController {
   async store ({ request, response }) {
-    const presentTime = new Date()
-    const period = subHours(presentTime, 2)
+    // const presentTime = new Date()
+    // const period = subHours(presentTime, 2)
     try {
       const data = request.only(['cpf'])
 
@@ -30,15 +30,15 @@ class ValidationController {
         company.setVisible(['razao'])
       })
 
-      const hasValidate = await Validation.query()
-        .where('user_id', user.id)
-        .whereBetween('created_at', [period, presentTime])
-        .fetch()
+      // const hasValidate = await Validation.query()
+      //   .where('user_id', user.id)
+      //   .whereBetween('created_at', [period, presentTime])
+      //   .fetch()
 
-      const hasValidateData = await hasValidate.toJSON()
-      if (hasValidateData[0]) {
-        return response.status(404).json({ message: 'É permitida uma única refeição por período!' })
-      }
+      // const hasValidateData = await hasValidate.toJSON()
+      // if (hasValidateData[0]) {
+      //   return response.status(404).json({ message: 'É permitida uma única refeição por período!' })
+      // }
 
       const validation = await Validation.create({
         user_id: user.id,
