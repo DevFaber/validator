@@ -128,10 +128,14 @@ class UserController {
     return user
   }
 
-  async destroy ({ params }) {
-    const user = User.findOrFail(params.id)
+  async destroy ({ params, response }) {
+    try {
+      const user = await User.findOrFail(params.id)
 
-    await user.delete()
+      await user.delete()
+    } catch (error) {
+      return response.status(404).json({ message: 'Usuário não existe!' })
+    }
   }
 }
 
