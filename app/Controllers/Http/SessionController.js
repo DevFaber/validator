@@ -25,6 +25,7 @@ class SessionController {
       is_admin: data.is_admin,
       password: data.password,
       file_id: data.file_id,
+      terminal_id: data.terminal_id,
       company: data && data.companies && data.companies.razao,
       company_id: data && data.companies && data.companies.id,
       department: data && data.departments && data.departments.name
