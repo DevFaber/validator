@@ -20,6 +20,7 @@ module.exports = {
     'https://validaonline.net',
     'https://www.validaonline.net',
     'https://serene-neumann-2ebed2.netlify.com',
+    'https://master.d28wa9wi7eydh3.amplifyapp.com/'
   ],
 
   /*
@@ -87,5 +88,5 @@ module.exports = {
   | Define Access-Control-Allow-Max-Age
   |
   */
-  maxAge: 90,
+  maxAge: 90
 }
