@@ -35,7 +35,7 @@ class UserController {
         .with('companies', (company) => {
           company.setVisible(['razao'])
         })
-        .setVisible(['id', 'name', 'cpf', 'email', 'office'])
+        .setVisible(['id', 'name', 'cpf', 'email', 'office', 'is_active'])
         .orderBy('id', 'asc')
         .fetch()
     } else if
@@ -49,7 +49,7 @@ class UserController {
         .with('companies', (company) => {
           company.setVisible(['razao'])
         })
-        .setVisible(['id', 'name', 'cpf', 'email', 'office'])
+        .setVisible(['id', 'name', 'cpf', 'email', 'office', 'is_active'])
         .orderBy('id', 'asc')
         .fetch()
     } else if
@@ -61,7 +61,7 @@ class UserController {
         .with('companies', (company) => {
           company.setVisible(['razao'])
         })
-        .setVisible(['id', 'name', 'cpf', 'email', 'office'])
+        .setVisible(['id', 'name', 'cpf', 'email', 'office', 'is_active'])
         .orderBy('id', 'asc')
         .fetch()
     }
